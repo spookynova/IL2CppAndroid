@@ -1,0 +1,86 @@
+plugins {
+    id 'com.android.application'
+    id 'org.lsposed.lsparanoid'
+    id 'top.niunaijun.blackobfuscator'
+}
+
+
+lsparanoid {
+    seed = 729363890
+}
+
+BlackObfuscator {
+    // Enabled state
+    enabled true
+    // Obfuscation depth
+    depth 2
+    // The classes which need to be obfuscated
+    obfClass = ["com.android.support"]
+    // It will not obfuscate the classes that in blackClass
+//    blackClass = ["top.niunaijun.black"]
+}
+
+
+android {
+    compileSdk 34
+    namespace 'com.android.support'
+    defaultConfig {
+        applicationId "com.android.support"
+        minSdkVersion 19
+        targetSdk 34
+        versionCode 1
+        versionName "3.2"
+        ndk {
+            abiFilters 'armeabi-v7a', 'arm64-v8a'
+        }
+        signingConfig signingConfigs.debug
+    }
+
+    // keystore
+    signingConfigs {
+        release {
+            storeFile file('R3DNETWORK.jks')
+            storePassword '31ad562aae55'
+            keyAlias 'rrosetta'
+            keyPassword '31ad562aae55'
+            enableV1Signing = false
+            enableV3Signing = true
+        }
+
+        debug {
+            storeFile file('R3DNETWORK.jks')
+            storePassword '31ad562aae55'
+            keyAlias 'rrosetta'
+            keyPassword '31ad562aae55'
+            enableV1Signing = false
+            enableV3Signing = true
+        }
+    }
+
+
+    buildTypes {
+        release {
+            shrinkResources false
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            shrinkResources false
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+    }
+    ndkVersion "27.1.12297006"
+    externalNativeBuild {
+        ndkBuild {
+            path file('src/main/jni/Android.mk')
+        }
+    }
+}
+
+//dependencies must be placed below 'android' brackets to get it work on AIDE
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+}
