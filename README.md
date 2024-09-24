@@ -1,5 +1,8 @@
 # Android Mod Menu Template
 
+![Mod Preview](https://raw.githubusercontent.com/spookynova/Base-Android-Mod-Menu/refs/heads/main/img/preview.png)
+
+
 This project based on [LGL Mod Menu](https://github.com/LGLTeam/Android-Mod-Menu/), i'm just changing the menu, adding some modules and other thing, also i'm adding [BlackObfuscator](https://github.com/CodingGay/BlackObfuscator-ASPlugin) and [LSParanoid](https://github.com/LSPosed/LSParanoid).
 
 ## Thanks to
