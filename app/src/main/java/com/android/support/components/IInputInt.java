@@ -88,7 +88,7 @@ public class IInputInt {
                         num1 = Integer.MAX_VALUE;
                 }
 
-                button.setText(Html.fromHtml(featName + ": <font color='" + Colors.NumberTxtColor + "'>" + num1 + "</font>"));
+                button.setText(Html.fromHtml(featName + ": <font color='" + Colors.TEXT_COLOR_2 + "'>" + num1 + "</font>"));
                 Preferences.changeFeatureInt(featName, featNum, num1);
                 editText.setFocusable(false);
             });

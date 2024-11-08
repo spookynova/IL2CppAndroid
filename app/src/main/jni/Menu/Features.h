@@ -40,6 +40,17 @@ jobjectArray GetFeatureList(JNIEnv *env, jobject context) {
     const char *features[] = {
             OBFUSCATE("ICollapse_ESP Hack"),
             OBFUSCATE("1_CollapseAdd_ICheckBox_Crosshair"),
+            OBFUSCATE("2_CollapseAdd_ISpinner_Crosshair Color_Red,Green,Blue"),
+            OBFUSCATE("3_CollapseAdd_ISlider_Crosshair Size_1_5"),
+            OBFUSCATE("4_CollapseAdd_ISwitch_Player Box"),
+            OBFUSCATE("5_CollapseAdd_IRadioButton_Box Type_2D,3D"),
+            OBFUSCATE("6_CollapseAdd_IInputText_Player Name"),
+            OBFUSCATE("7_CollapseAdd_IInputInt_Player Health"),
+            OBFUSCATE("8_CollapseAdd_IButton_Player ESP"),
+            OBFUSCATE("9_CollapseAdd_IButtonLink_Website_https://github.com/spookynova/IL2CppAndroid"),
+            OBFUSCATE("10_CollapseAdd_ICategory_Player Info"),
+            OBFUSCATE("11_CollapseAdd_ITextView_<b>Player Info</b> <br> <i>Player Name: </i> <u>Unknown</u> <br> <i>Player Health: </i> <u>100</u>"),
+
             };
 
     //Now you dont have to manually update the number everytime;
@@ -54,19 +65,21 @@ jobjectArray GetFeatureList(JNIEnv *env, jobject context) {
     return (ret);
 }
 
-void Changes(JNIEnv *env, jclass clazz, jobject obj,
-             jint featNum, jstring featName, jint value,
-             jboolean boolean, jstring str) {
+void Changes(JNIEnv *env, jclass clazz, jobject obj,jint featNum, jstring featName, jint value,jboolean boolean, jstring str) {
 
-    LOGD(OBFUSCATE("Feature name: %d - %s | Value: = %d | Bool: = %d | Text: = %s"), featNum,
-         env->GetStringUTFChars(featName, 0), value,
-         boolean, str != NULL ? env->GetStringUTFChars(str, 0) : "");
+    LOGD(OBFUSCATE("Feature name: %d - %s | Value: = %d | Bool: = %d | Text: = %s"), featNum,env->GetStringUTFChars(featName, 0), value,boolean, str != NULL ? env->GetStringUTFChars(str, 0) : "");
 
     //BE CAREFUL NOT TO ACCIDENTLY REMOVE break;
 
     switch (featNum) {
         case 1:
             Vars::PlayerData.ESPCrosshair = boolean;
+            break;
+        case 2:
+            Vars::PlayerData.CrosshairColor = value;
+            break;
+        case 3:
+            Vars::PlayerData.CrosshairSize = value;
             break;
         default:
             break;

@@ -73,7 +73,7 @@ public class IInputText {
                 alertName.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         String str = editText.getText().toString();
-                        button.setText(Html.fromHtml(featName + ": <font color='" + Colors.NumberTxtColor + "'>" + str + "</font>"));
+                        button.setText(Html.fromHtml(featName + ": <font color='" + Colors.TEXT_COLOR_2 + "'>" + str + "</font>"));
                         Preferences.changeFeatureString(featName, featNum, str);
                         editText.setFocusable(false);
                     }

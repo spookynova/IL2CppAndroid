@@ -36,7 +36,9 @@ public class IButtonLink {
         button.setPaintFlags(button.getPaintFlags() | android.graphics.Paint.UNDERLINE_TEXT_FLAG);
         button.setOnClickListener(v -> {
             // Launch Url with chrome custom tab
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setData(Uri.parse(url));
             context.startActivity(intent);
         });
 

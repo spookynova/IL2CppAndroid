@@ -7,6 +7,8 @@ namespace Vars {
         bool godMode = false;
         bool ESP = false;
         bool ESPCrosshair = false;
+        int CrosshairSize = 0;
+        int CrosshairColor = 0; //
     } PlayerData;
 }
 

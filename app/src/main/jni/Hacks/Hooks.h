@@ -19,8 +19,26 @@ void PlayerUpdate(void *_this) {
 
 void DrawESP(Draw esp, int screenWidth, int screenHeight) {
     if (Vars::PlayerData.ESPCrosshair) {
-        LOGD("Drawing ESP");
         // Draw ESP here
-        esp.DrawCrosshair(Color::Red(), Vector2(screenWidth / 2, screenHeight / 2), 100);
+        Color crosshair_color = Color::Red();
+        int crosshair_size = 0;
+
+        if (Vars::PlayerData.CrosshairColor == 0) {
+            crosshair_color = Color::Red();
+        } else if (Vars::PlayerData.CrosshairColor == 1) {
+            crosshair_color = Color::Green();
+        } else {
+            crosshair_color = Color::Blue();
+        }
+
+
+
+        if (Vars::PlayerData.CrosshairSize > 0) {
+            crosshair_size = Vars::PlayerData.CrosshairSize;
+        } else {
+            crosshair_size = 1;
+        }
+
+        esp.DrawCrosshair(crosshair_color,  Vector2(screenWidth / 2, screenHeight / 2), crosshair_size * 10);
     }
 }
