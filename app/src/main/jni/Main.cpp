@@ -37,11 +37,15 @@
 #define HOOK(clazz, method, count, new_method, old_method) IL2CPP::Hook(IL2CPP::Class::Utils::GetMethodPointer(OBFUSCATE(clazz), OBFUSCATE(method),count), (void *) &new_method, (void **) &old_method)
 
 void hook_thread() {
-    // ----------------- Unity Engine -------------------
-    get_transform = (void *(*)(void *)) IL2CPP::Class::Utils::GetMethodPointer( OBFUSCATE("Component"), OBFUSCATE("get_transform"), 0);
-    get_position_Injected = (void (*)(void *, Vector3 &)) IL2CPP::Class::Utils::GetMethodPointer( OBFUSCATE("Transform"), OBFUSCATE("get_position_Injected"), 1);
-    WorldToScreenPoint_Injected = (void (*)(void *, Vector3, int, Vector3 &)) IL2CPP::Class::Utils::GetMethodPointer( OBFUSCATE("Camera"), OBFUSCATE("WorldToScreenPoint_Injected"), 3);
-    // -------------------------------------------------
+    // ----------------- Hooks -------------------
+    // You can hook your methods here
+    // First args is the class name
+    // Second args is the method name
+    // Third args is the method args count
+    // Fourth args is the new method
+    // Fifth args is the old method
+    // Example:
+    // HOOK("PlayerManager", "Update", 0, PlayerUpdate, orig_PlayerUpdate);
 }
 
 
@@ -56,15 +60,16 @@ void *hack_thread(void *) {
     LOGI(OBFUSCATE("%s has been loaded"), (const char *) IL2CPP_MODULE);
     LOGI(OBFUSCATE("Trying to hook in il2cpp now..."));
 
-    if (!IL2CPP::Initialize(true, 10))
+    // sleep for 10 seconds to make sure all the libs are loaded
+    sleep(10);
+
+    if (!IL2CPP::Initialize())
         LOGE(OBFUSCATE("Failed to initialize IL2CPP Resolver"));
     else
         LOGI(OBFUSCATE("IL2CPP Resolver initialized"));
 
-    // sleep for 10 seconds to make sure all the libs are loaded
-    sleep(10);
-
     // Start hooking
+    LOGI(OBFUSCATE("Starting hooks"));
     hook_thread();
     return NULL;
 }

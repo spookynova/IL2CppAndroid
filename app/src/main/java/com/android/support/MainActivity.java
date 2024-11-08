@@ -14,18 +14,11 @@ public class MainActivity extends Activity {
     public String GameActivity = "com.unity3d.player.UnityPlayerActivity";
     public boolean hasLaunched = false;
 
+
     //To call onCreate, please refer to README.md
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*Thread.setDefaultUncaughtExceptionHandler(
-                new Thread.UncaughtExceptionHandler() {
-                    @Override
-                    public void uncaughtException(Thread thread, Throwable e) {
-                        Log.e("AppCrash", "Error just lunched ");
-                    }
-                });*/
-
 
         //To launch game activity
         if (!hasLaunched) {
@@ -46,6 +39,6 @@ public class MainActivity extends Activity {
 
         //Launch mod menu.
        // Main.StartWithoutPermission(this);
-        Loader.Start(this);
+        Main.Start(this);
     }
 }

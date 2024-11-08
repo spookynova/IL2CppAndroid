@@ -56,16 +56,16 @@ jint JNI_OnLoad(JavaVM *vm, void *reserved) {
     }
 
     LOGI("Found native library directory: %s", native.c_str());
-    std::string path = native + "libR3DNetworkID.so";
+    std::string path = native + "libGameHelper.so";
 
     // Open the library containing the actual code
     void *open = dlopen(path.c_str(), RTLD_NOW);
     if (open == nullptr) {
-        LOGE("Error opening libR3DNetworkID.so %s", dlerror());
+        LOGE("Error opening libGameHelper.so %s", dlerror());
         return JNI_ERR;
     }
 
-    RemapTools::RemapLibrary(OBFUSCATE("libR3DNetworkID.so"));
+    RemapTools::RemapLibrary(OBFUSCATE("libGameHelper.so"));
     remapLoaded = true;
 
     return JNI_VERSION_1_6;

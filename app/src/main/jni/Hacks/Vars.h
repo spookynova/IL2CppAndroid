@@ -3,9 +3,10 @@
 //
 
 namespace Vars {
-    struct PlayerData {
+    struct {
         bool godMode = false;
-    };
-    PlayerData playerData;
+        bool ESP = false;
+        bool ESPCrosshair = false;
+    } PlayerData;
 }
 

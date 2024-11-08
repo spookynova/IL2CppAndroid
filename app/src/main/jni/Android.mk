@@ -12,7 +12,7 @@ include $(CLEAR_VARS)
 # Here is the name of your lib.
 # When you change the lib name, change also on System.loadLibrary("") under OnCreate method on StaticActivity.java
 # Both must have same name
-LOCAL_MODULE    := R3DNetworkID
+LOCAL_MODULE    := GameHelper
 
 # -std=c++17 is required to support AIDE app with NDK
 LOCAL_CFLAGS := -w -s -Wno-error=format-security -fvisibility=hidden -fpermissive -fexceptions
@@ -41,11 +41,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE    := Loader
 LOCAL_CFLAGS := -w -s -Wno-error=format-security -fvisibility=hidden -fpermissive -fexceptions
-LOCAL_CPPFLAGS := -w -s -Wno-error=format-security -fvisibility=hidden -Werror -std=c++20
-LOCAL_CPPFLAGS += -Wno-error=c++11-narrowing -fpermissive -Wall -fexceptions
-LOCAL_LDFLAGS += -Wl,--gc-sections,--strip-all,-llog
 LOCAL_LDLIBS := -llog -landroid
-LOCAL_ARM_MODE := arm
 
 LOCAL_SRC_FILES := Loader/Loader.cpp
 

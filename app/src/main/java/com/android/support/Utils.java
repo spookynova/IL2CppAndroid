@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.Settings;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -35,5 +36,14 @@ public class Utils {
     public static void initRequest() {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+    }
+
+    //For our image a little converter
+    public static int convertDipToPixels(Context context,int i) {
+        return (int) ((((float) i) * context.getResources().getDisplayMetrics().density) + 0.5f);
+    }
+
+    public static int dp(Context context,int i) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (float) i, context.getResources().getDisplayMetrics());
     }
 }

@@ -25,7 +25,6 @@ public class DrawView extends View implements Runnable {
     Date time;
     SimpleDateFormat formatter;
 
-
     public DrawView(Context context) {
         super(context, null, 0);
         InitializePaints();
@@ -43,7 +42,7 @@ public class DrawView extends View implements Runnable {
         if (canvas != null && getVisibility() == VISIBLE) {
             ClearCanvas(canvas);
             time.setTime(System.currentTimeMillis());
-            Menu.OnDrawLoad(this, canvas);
+            Natives.OnDrawLoad(this, canvas);
         }
     }
 

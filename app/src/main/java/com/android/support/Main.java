@@ -19,27 +19,12 @@ public class Main {
     static {
         // When you change the lib name, change also on Android.mk file
         // Both must have same name
-        System.loadLibrary("R3DNetworkID");
-    }
-
-    private static native void CheckOverlayPermission(Context context);
-    private static native void LoadNativeLibPath(String path);
-    public static void StartWithoutPermission(Context context) {
-        CrashHandler.init(context, true);
-        if (context instanceof Activity) {
-            //Check if context is an Activity.
-            Menu menu = new Menu(context);
-            menu.SetWindowManagerActivity();
-            menu.ShowMenu();
-        } else {
-            //Anything else, ask for permission
-            CheckOverlayPermission(context);
-        }
+        System.loadLibrary("GameHelper");
     }
 
     public static void Start(Context context) {
-        CrashHandler.init(context, false);
-        LoadNativeLibPath(context.getApplicationInfo().nativeLibraryDir);
-        CheckOverlayPermission(context);
+//        CrashHandler.init(context, false);
+        Natives.LoadNativeLibPath(context.getApplicationInfo().nativeLibraryDir);
+        Natives.CheckOverlayPermission(context);
     }
 }

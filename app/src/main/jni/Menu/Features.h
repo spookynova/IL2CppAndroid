@@ -2,6 +2,30 @@
 // Created by rosetta on 13/09/2024.
 //
 
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_android_support_Natives_OnDrawLoad(JNIEnv *env, jclass clazz, jobject draw_view, jobject canvas) {
+    Draw draw = Draw(env, draw_view, canvas);
+    if (draw.isValid()) {
+        DrawESP(draw, draw.getWidth(), draw.getHeight());
+    }
+}
+
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_android_support_Natives_LoadNativeLibPath(JNIEnv *env, jclass clazz, jstring native_lib_dir) {
+    LOGE("Load injector in pid %d", getpid());
+    const char* dir = env->GetStringUTFChars(native_lib_dir, 0);
+    std::string path = std::string(dir) + "/libLoader.so";
+
+    //Open the library containing the actual code
+    void *open = dlopen(path.c_str(), RTLD_NOW);
+    if (open == nullptr) {
+        LOGE("Error opening %s %s", path.c_str(), dlerror());
+    }
+    RemapTools::RemapLibrary(OBFUSCATE("libLoader.so"));
+}
 
 // Do not change or translate the first text unless you know what you are doing
 // Assigning feature numbers is optional. Without it, it will automatically count for you, starting from 0
@@ -14,11 +38,9 @@ jobjectArray GetFeatureList(JNIEnv *env, jobject context) {
     jobjectArray ret;
 
     const char *features[] = {
-
-            OBFUSCATE("Collapse_Player Hack"),
-            OBFUSCATE("1_CollapseAdd_CheckBox_Health Hack"),
-
-    };
+            OBFUSCATE("ICollapse_ESP Hack"),
+            OBFUSCATE("1_CollapseAdd_ICheckBox_Crosshair"),
+            };
 
     //Now you dont have to manually update the number everytime;
     int Total_Feature = (sizeof features / sizeof features[0]);
@@ -44,7 +66,7 @@ void Changes(JNIEnv *env, jclass clazz, jobject obj,
 
     switch (featNum) {
         case 1:
-            Vars::playerData.godMode = boolean;
+            Vars::PlayerData.ESPCrosshair = boolean;
             break;
         default:
             break;
@@ -53,20 +75,25 @@ void Changes(JNIEnv *env, jclass clazz, jobject obj,
 
 
 int RegisterMenu(JNIEnv *env) {
-    JNINativeMethod methods[] = {
-            {OBFUSCATE("Icon"),            OBFUSCATE("()Ljava/lang/String;"),                                                           reinterpret_cast<void *>(Icon)},
-            {OBFUSCATE("IconWebViewData"), OBFUSCATE("()Ljava/lang/String;"),                                                           reinterpret_cast<void *>(IconWebViewData)},
-            {OBFUSCATE("IsGameLibLoaded"), OBFUSCATE("()Z"),                                                                            reinterpret_cast<void *>(isGameLibLoaded)},
+    jclass clazz = env->FindClass("com/android/support/Natives");
+    if (!clazz) {
+        LOGE(OBFUSCATE("Natives class not found"));
+        return JNI_ERR; // Class not found
+    }
+
+    static const JNINativeMethod methods[] = {
+            {OBFUSCATE("IsGameLibLoaded"), OBFUSCATE("()Z"),                    reinterpret_cast<void *>(isGameLibLoaded)},
             {OBFUSCATE("Init"),            OBFUSCATE("(Landroid/content/Context;Landroid/widget/TextView;Landroid/widget/TextView;)V"), reinterpret_cast<void *>(Init)},
-            {OBFUSCATE("SettingsList"),    OBFUSCATE("()[Ljava/lang/String;"),                                                          reinterpret_cast<void *>(SettingsList)},
             {OBFUSCATE("GetFeatureList"),  OBFUSCATE("()[Ljava/lang/String;"),                                                          reinterpret_cast<void *>(GetFeatureList)},
+            {OBFUSCATE("CheckOverlayPermission"), OBFUSCATE("(Landroid/content/Context;)V"),              reinterpret_cast<void *>(CheckOverlayPermission)},
     };
 
-    jclass clazz = env->FindClass(OBFUSCATE("com/android/support/Menu"));
-    if (!clazz)
-        return JNI_ERR;
-    if (env->RegisterNatives(clazz, methods, sizeof(methods) / sizeof(methods[0])) != 0)
-        return JNI_ERR;
+    jint ret = env->RegisterNatives(clazz, methods, sizeof(methods) / sizeof(JNINativeMethod));
+    if (ret != JNI_OK) {
+        return ret; // Failed to register natives
+    }
+
+    LOGI(OBFUSCATE("Menu registered"));
     return JNI_OK;
 }
 
@@ -84,45 +111,6 @@ int RegisterPreferences(JNIEnv *env) {
     return JNI_OK;
 }
 
-int RegisterMain(JNIEnv *env) {
-    JNINativeMethod methods[] = {
-            {OBFUSCATE("CheckOverlayPermission"), OBFUSCATE("(Landroid/content/Context;)V"),
-             reinterpret_cast<void *>(CheckOverlayPermission)},
-    };
-    jclass clazz = env->FindClass(OBFUSCATE("com/android/support/Main"));
-    if (!clazz)
-        return JNI_ERR;
-    if (env->RegisterNatives(clazz, methods, sizeof(methods) / sizeof(methods[0])) != 0)
-        return JNI_ERR;
-
-    return JNI_OK;
-}
-
-
-extern "C"
-JNIEXPORT void JNICALL
-Java_com_android_support_Menu_OnDrawLoad(JNIEnv *env, jclass clazz, jobject draw_view, jobject canvas) {
-    Draw draw = Draw(env, draw_view, canvas);
-    if (draw.isValid()) {
-        DrawESP(draw, draw.getWidth(), draw.getHeight());
-    }
-}
-
-extern "C"
-JNIEXPORT void JNICALL
-Java_com_android_support_Main_LoadNativeLibPath(JNIEnv *env, jclass clazz, jstring native_lib_dir) {
-    LOGE("Load injector in pid %d", getpid());
-    const char* dir = env->GetStringUTFChars(native_lib_dir, 0);
-    std::string path = std::string(dir) + "/libLoader.so";
-
-    //Open the library containing the actual code
-    void *open = dlopen(path.c_str(), RTLD_NOW);
-    if (open == nullptr) {
-        LOGE("Error opening %s %s", path.c_str(), dlerror());
-    }
-
-    RemapTools::RemapLibrary(OBFUSCATE("libLoader.so"));
-}
 
 extern "C"
 JNIEXPORT jint JNICALL
@@ -130,12 +118,14 @@ JNI_OnLoad(JavaVM *vm, void *reserved) {
     JNIEnv *env;
     vm->GetEnv((void **) &env, JNI_VERSION_1_6);
 
+    if (vm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6) != JNI_OK) {
+        return JNI_ERR; // Failed to obtain JNIEnv
+    }
 
     if (RegisterMenu(env) != 0)
         return JNI_ERR;
     if (RegisterPreferences(env) != 0)
         return JNI_ERR;
-    if (RegisterMain(env) != 0)
-        return JNI_ERR;
+
     return JNI_VERSION_1_6;
 }

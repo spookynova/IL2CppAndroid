@@ -143,15 +143,12 @@ bool ca8f2802(JNIEnv *env, jobject ctx) {
     return false;
 }
 
-void Init(JNIEnv *env, jobject thiz, jobject ctx, jobject title, jobject subtitle){
+void Init(JNIEnv *env, jobject thiz, jobject ctx, jobject title, jobject bottomTitle){
     //Set sub title
-    setText(env, title, OBFUSCATE("<b>R3D Network ID</b>"));
+    setText(env, title, OBFUSCATE("<b>-=[ R3D Network ID ]=-</b>"));
 
     //Set sub title
-    setText(env, subtitle, OBFUSCATE("<b>- Modded by rrosetta | Platinmods.com -</b>"));
-
-    //Dialog Example
-    //setDialog(ctx,env,OBFUSCATE("Title"),OBFUSCATE("Message Example"));
+    setText(env, bottomTitle, OBFUSCATE("<b>- Modded by rrosetta | Platinmods.com -</b>"));
 
     //Toast Example
     Toast(env,ctx,OBFUSCATE("R3D Network ID"),ToastLength::LENGTH_LONG);
