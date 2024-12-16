@@ -36,10 +36,10 @@ This permission is required for overlaying UI elements, such as a floating menu,
 To activate the floating menu, declare a service in `AndroidManifest.xml` to your targer app. This service will handle the display and lifecycle of the floating menu:
 ```xml
 <service
-    android:name="com.android.support.Launcher"
-    android:enabled="true"
-    android:exported="true"
-    android:stopWithTask="true" />
+        android:name="com.android.support.Launcher"
+        android:enabled="true"
+        android:exported="true"
+        android:stopWithTask="true" />
 ```
 
 #### 3. Call the Loader class
@@ -62,3 +62,8 @@ to
 ```java
 typeface = Typeface.DEFAULT;
 ```
+
+## Disclaimer
+This project is for Educational Use only. We do not condone this project being used to gain an advantage against other people. This project was made for fun.
+
+We strongly refrain you from buying any source codes on Telegram even if the author can be trusted, there is always a risk getting scammed. We will not be responsible for that. This project is always FREE to use
