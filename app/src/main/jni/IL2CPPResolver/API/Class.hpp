@@ -364,6 +364,62 @@ namespace IL2CPP
 
                 return m_pMethodPointer;
             }
+
+            // https://github.com/gmh5225/IL2CPP_Resolver_Easy_Template/blob/main/helpers/OnlyTest.hpp
+            template<typename Ret, typename... Args>
+            Ret CreateInstanceAndInvoke(const std::string& className, const std::string& ctorName, const std::string& methodName,int count, Args... ctorArgs) {
+                auto m_class = IL2CPP::Class::Find(className.c_str());
+                if (!m_class) {
+                    LOGE("Class %s not found.\n", className.c_str());
+                    return Ret();
+                }
+
+                void* m_ctorPtr = IL2CPP::Class::Utils::GetMethodPointer(m_class, ctorName.c_str(), sizeof...(ctorArgs));
+                if (!m_ctorPtr) {
+                    LOGE("Constructor %s not found in class %s.\n", ctorName.c_str(), className.c_str());
+                    return Ret();
+                }
+
+                auto m_instance = reinterpret_cast<Unity::il2cppObject * (*)(Args...)>(m_ctorPtr)(ctorArgs...);
+                if (!m_instance) {
+                    LOGE("Failed to create instance of class %s.\n", className.c_str());
+                    return Ret();
+                }
+
+                void* m_methodPtr = IL2CPP::Class::Utils::GetMethodPointer(m_class, methodName.c_str(), count);
+                if (!m_methodPtr) {
+                    LOGE("Method %s not found in class %s.\n", methodName.c_str(), className.c_str());
+                    return Ret();
+                }
+
+                return reinterpret_cast<Ret(*)(void*)>(m_methodPtr)(m_instance);
+            }
+
+            template<typename Ret, typename... Args>
+            Ret InvokeMethod(void* instance, const std::string& className, const std::string& methodName, Args... args) {
+                if(!instance) {
+                    LOGE("Null instance, invoke method %s not found in class %s, ", methodName.c_str(), className.c_str());
+                    return Ret();
+                }
+                void* methodPointer  = GetMethodPointer(className.c_str(), methodName.c_str(),sizeof...(args));
+                if (!methodPointer) {
+                    LOGE("Invoke method %s  not found in class %s",methodName.c_str(),className.c_str());
+                    return Ret();
+                }
+                return reinterpret_cast<Ret(*)(void*, Args...)>(methodPointer)(instance, args...);
+            }
+
+
+            template<typename Ret, typename... Args>
+            Ret InvokeStaticMethod(const std::string& className, const std::string& methodName, Args... args) {
+                void* methodPointer = GetMethodPointer(className.c_str(), methodName.c_str(), sizeof...(args));
+                if (!methodPointer) {
+                    LOGE("Method %s not found in class %s",methodName.c_str(),className.c_str());
+                    return Ret();
+                }
+
+                return reinterpret_cast<Ret(*)(Args...)>(methodPointer)(args...);
+            }
         }
     }
 
