@@ -18,10 +18,20 @@ void PlayerUpdate(void *_this) {
 // Example: esp.DrawCrosshair(Color::Red(),  Vector2(screenWidth / 2, screenHeight / 2), 10);
 
 void DrawESP(Draw esp, int screenWidth, int screenHeight) {
+
+    // Example to get camera
+    // Unity::CCamera *camera = Unity::Camera::GetMain();
+
+    // Example to get world to screen point
+
+    // Unity::Vector3 worldPos = Unity::Vector3(0, 0, 0);
+    // Unity::Vector3 screenPos;
+    // camera->WorldToScreen(worldPos, screenPos,4);
+
     if (Vars::PlayerData.ESPCrosshair) {
         // Draw ESP here
-        Color crosshair_color = Color::Red();
-        int crosshair_size = 0;
+        Color crosshair_color;
+        int crosshair_size;
 
         if (Vars::PlayerData.CrosshairColor == 0) {
             crosshair_color = Color::Red();
@@ -30,7 +40,6 @@ void DrawESP(Draw esp, int screenWidth, int screenHeight) {
         } else {
             crosshair_color = Color::Blue();
         }
-
 
 
         if (Vars::PlayerData.CrosshairSize > 0) {
