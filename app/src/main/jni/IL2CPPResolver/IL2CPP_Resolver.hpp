@@ -236,7 +236,7 @@ namespace IL2CPP
 
                 Globals.m_GameAssembly = dlopen(IL2CPP_MAIN_MODULE, RTLD_NOLOAD);
                 ++m_SecondsWaited;
-                std::this_thread::sleep_for(std::chrono::seconds(1));
+                sleep(1);
             }
         }
         else
