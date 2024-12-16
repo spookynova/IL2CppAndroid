@@ -46,27 +46,30 @@ void hook_thread() {
     // Fifth args is the old method
     // Example:
     // HOOK("PlayerManager", "Update", 0, PlayerUpdate, orig_PlayerUpdate);
+
+    // if the class have namespace, you can use it like this:
+    // HOOK("UnityEngine.Camera", "Update", 0, PlayerUpdate, orig_PlayerUpdate);
 }
 
 
 void *hack_thread(void *) {
     LOGI(OBFUSCATE("pthread created"));
 
+    espManager = new ESPManager();
+
     //Check if target lib is loaded
     do {
         sleep(1);
-    } while (!isLibraryLoaded(IL2CPP_MODULE));
+    } while (!KittyMemory::getLibraryMap(IL2CPP_MODULE).isValid());
 
     LOGI(OBFUSCATE("%s has been loaded"), (const char *) IL2CPP_MODULE);
     LOGI(OBFUSCATE("Trying to hook in il2cpp now..."));
 
-    // sleep for 10 seconds to make sure all the libs are loaded
-    sleep(10);
+    do {
+        sleep(1);
+    } while (!IL2CPP::Initialize());
 
-    if (!IL2CPP::Initialize())
-        LOGE(OBFUSCATE("Failed to initialize IL2CPP Resolver"));
-    else
-        LOGI(OBFUSCATE("IL2CPP Resolver initialized"));
+    LOGI(OBFUSCATE("IL2CPP Resolver initialized"));
 
     // Start hooking
     LOGI(OBFUSCATE("Starting hooks"));
