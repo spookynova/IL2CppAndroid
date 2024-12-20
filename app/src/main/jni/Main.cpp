@@ -34,21 +34,11 @@
 //Target lib here
 #define IL2CPP_MODULE OBFUSCATE("libil2cpp.so")
 
-#define HOOK(clazz, method, count, new_method, old_method) IL2CPP::Hook(IL2CPP::Class::Utils::GetMethodPointer(OBFUSCATE(clazz), OBFUSCATE(method),count), (void *) &new_method, (void **) &old_method)
-
 void hook_thread() {
     // ----------------- Hooks -------------------
     // You can hook your methods here
-    // First args is the class name
-    // Second args is the method name
-    // Third args is the method args count
-    // Fourth args is the new method
-    // Fifth args is the old method
-    // Example:
-    // HOOK("PlayerManager", "Update", 0, PlayerUpdate, orig_PlayerUpdate);
-
     // if the class have namespace, you can use it like this:
-    // HOOK("UnityEngine.Camera", "Update", 0, PlayerUpdate, orig_PlayerUpdate);
+    // IL2CPP::Hook("WarPolygon.CPlayerLocal", "get_CurrentHeight", 0, (void*) HookPlayerCurrentHeight, (void**)&old_PlayerCurrentHeight);
 }
 
 
