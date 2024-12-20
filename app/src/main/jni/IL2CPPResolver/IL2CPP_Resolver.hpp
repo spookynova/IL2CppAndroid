@@ -262,7 +262,14 @@ namespace IL2CPP
         }
     }
 
+    void Hook(const char* m_pClassName, const char* m_pMethodName, int m_iArgs, void* m_Replace, void** m_Backup)
+    {
 
+        void* m_pMethod = Class::Utils::GetMethodPointer(m_pClassName, m_pMethodName, m_iArgs);
+        if (m_pMethod)
+            Hook(m_pMethod, m_Replace, m_Backup);
+
+    }
     
     bool Initialize(void* GameAssemblyHandle)
     {
