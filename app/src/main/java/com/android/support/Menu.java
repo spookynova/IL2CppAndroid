@@ -87,7 +87,7 @@ public class Menu {
     // Reference: https://www.androidhive.info/2016/11/android-floating-widget-like-facebook-chat-head/
     public Menu(Context context) {
         getContext = context;
-
+        drawView = new DrawView(getContext);
 //        typeface = Typeface.createFromAsset(context.getAssets(), "Pixellari.ttf");
         typeface = Typeface.DEFAULT;
 
@@ -229,24 +229,28 @@ public class Menu {
     @SuppressLint("WrongConstant")
     public void SetWindowManagerWindowService() {
         //Variable to check later if the phone supports Draw over other apps permission
-        int iparams = Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O ? 2038 : 2002;
-        vmParams = new WindowManager.LayoutParams(WRAP_CONTENT,WRAP_CONTENT, iparams, 8, -3);
+        int mType = Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O ? 2038 : 2002;
+        vmParams = new WindowManager.LayoutParams(WRAP_CONTENT,WRAP_CONTENT, mType, 8, -3);
         //params = new WindowManager.LayoutParams(WindowManager.LayoutParams.LAST_APPLICATION_WINDOW, 8, -3);
         vmParams.gravity = 51;
         vmParams.x = POS_X;
         vmParams.y = POS_Y;
 
-        mWindowManager = (WindowManager) getContext.getSystemService(getContext.WINDOW_SERVICE);
-        drawView = new DrawView(getContext);
+        mWindowManager = (WindowManager) getContext.getSystemService(Context.WINDOW_SERVICE);
 
-        canvasParams = new WindowManager.LayoutParams(
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.MATCH_PARENT,
-                Build.VERSION.SDK_INT >= 26 ? 2038 : 2002,
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL |
+                mType,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
+                        WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL |
                         WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                PixelFormat.TRANSLUCENT);
-
+                PixelFormat.TRANSLUCENT
+        );
+        canvasParams = layoutParams;
+        layoutParams.gravity = Gravity.TOP | Gravity.START;
+        canvasParams.x = 0;
+        canvasParams.y = 100;
         mWindowManager.addView(drawView, canvasParams);
         mWindowManager.addView(__frameLayout, vmParams);
         overlayRequired = true;
