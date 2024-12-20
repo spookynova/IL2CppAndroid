@@ -42,7 +42,7 @@ public:
         return 0;
     }
 
-    void DrawLine(Color color, float thickness, Vector2 start, Vector2 end) {
+    void DrawLine(Color color, float thickness, Unity::Vector2 start, Unity::Vector2 end) {
         if (isValid()) {
             jclass canvasView = _env->GetObjectClass(_cvsView);
             jmethodID drawline = _env->GetMethodID(canvasView, "DrawLine",
@@ -65,6 +65,17 @@ public:
         }
     }
 
+    // public void DrawCircle(Canvas cvs, int a, int r, int g, int b, float stroke, float posX, float posY, float radius) {
+    void DrawCircle(Color color, float stroke, Vector2 pos, float radius) {
+        if (isValid()) {
+            jclass canvasView = _env->GetObjectClass(_cvsView);
+            jmethodID drawcircle = _env->GetMethodID(canvasView, "DrawCircle",
+                                                     "(Landroid/graphics/Canvas;IIIIFFFF)V");
+            _env->CallVoidMethod(_cvsView, drawcircle, _cvs, (int) color.a, (int) color.r,
+                                 (int) color.g, (int) color.b, stroke, pos.X, pos.Y, radius);
+        }
+    }
+
     void DrawFilledCircle(Color color, Vector2 pos, float radius) {
         if (isValid()) {
             jclass canvasView = _env->GetObjectClass(_cvsView);
@@ -76,10 +87,10 @@ public:
     }
 
     void DrawBox(Color color, float stroke, Rect rect) {
-        Vector2 v1 = Vector2(rect.x, rect.y);
-        Vector2 v2 = Vector2(rect.x + rect.w, rect.y);
-        Vector2 v3 = Vector2(rect.x + rect.w, rect.y + rect.h);
-        Vector2 v4 = Vector2(rect.x, rect.y + rect.h);
+        Unity::Vector2 v1 = Unity::Vector2(rect.x, rect.y);
+        Unity::Vector2 v2 = Unity::Vector2(rect.x + rect.w, rect.y);
+        Unity::Vector2 v3 = Unity::Vector2(rect.x + rect.w, rect.y + rect.h);
+        Unity::Vector2 v4 = Unity::Vector2(rect.x, rect.y + rect.h);
 
         DrawLine(color, stroke, v1, v2);
         DrawLine(color, stroke, v2, v3);
@@ -105,8 +116,8 @@ public:
     void DrawCrosshair(Color clr, Vector2 center, int size = 20) {
         float x = center.X - (size / 2.0f);
         float y = center.Y - (size / 2.0f);
-        DrawLine(clr, 3, Vector2(x, center.Y), Vector2(x + size, center.Y));
-        DrawLine(clr, 3, Vector2(center.X, y), Vector2(center.X, y + size));
+        DrawLine(clr, 3, Unity::Vector2(x, center.Y), Unity::Vector2(x + size, center.Y));
+        DrawLine(clr, 3, Unity::Vector2(center.X, y), Unity::Vector2(center.X, y + size));
     }
 };
 
