@@ -1,3 +1,4 @@
+![Mod Preview](https://github.com/user-attachments/assets/eb869c13-709d-440e-88d8-177fe66fbb06)
 
 # IL2CPP Android Template
 
@@ -9,8 +10,6 @@ This project is based on [LGL Mod Menu](https://github.com/LGLTeam/Android-Mod-M
   - Integrated [BlackObfuscator](https://github.com/CodingGay/BlackObfuscator-ASPlugin) for enhanced code obfuscation.
   - Added [LSParanoid](https://github.com/LSPosed/LSParanoid) to provide string encryption for securing sensitive text data.
 
-
-![Mod Preview](https://raw.githubusercontent.com/spookynova/Base-Android-Mod-Menu/refs/heads/main/img/preview.png)
 
 ## Credits
 
