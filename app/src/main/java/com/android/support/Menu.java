@@ -86,12 +86,14 @@ public class Menu {
     //Here we write the code for our Menu
     // Reference: https://www.androidhive.info/2016/11/android-floating-widget-like-facebook-chat-head/
     public Menu(Context context) {
-        getContext = context;
-        drawView = new DrawView(getContext);
-//        typeface = Typeface.createFromAsset(context.getAssets(), "Pixellari.ttf");
-        typeface = Typeface.DEFAULT;
+        getContext  = context;
+        drawView    = new DrawView(getContext);
+        typeface    = Typeface.DEFAULT;
+        Preferences.context = context;
+        InitComponent(context);
+    }
 
-
+    private void InitComponent(Context context) {
         // Set Components
         iSwitch     = new ISwitch(context, typeface);
         iSlider     = new ISlider(context, typeface);
@@ -106,7 +108,6 @@ public class Menu {
         iTextView   = new ITextView(context, typeface);
         iCollapse   = new ICollapse(context, typeface);
 
-        Preferences.context = context;
 
         __frameLayout = new FrameLayout(context); // Global markup
         __frameLayout.setOnTouchListener(onTouchListener());
