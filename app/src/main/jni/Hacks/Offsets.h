@@ -2,6 +2,8 @@
 // Created by rosetta on 31/05/2024.
 //
 
+
+// Here you can store the offsets of the game
 namespace Offsets {
     struct CPlayersInventoryWeapon {
         const uint64_t ReloadSpeed = 0x21DCAE0; // WarPolygon.CPlayersInventoryWeapon.get_ReloadSpeed()
@@ -53,6 +55,4 @@ namespace Offsets {
         const uint64_t Update = 0x21D675C; // WarPolygon.CEnemyBossCaptain.Update()
     };
     CEnemyBossCaptain CEnemyBossCaptain;
-
-
 }
