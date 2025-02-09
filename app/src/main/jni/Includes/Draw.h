@@ -42,7 +42,7 @@ public:
         return 0;
     }
 
-    void DrawLine(Color color, float thickness, Unity::Vector2 start, Unity::Vector2 end) {
+    void DrawLine(Unity::Color color, float thickness, Unity::Vector2 start, Unity::Vector2 end) {
         if (isValid()) {
             jclass canvasView = _env->GetObjectClass(_cvsView);
             jmethodID drawline = _env->GetMethodID(canvasView, "DrawLine",
@@ -54,7 +54,7 @@ public:
         }
     }
 
-    void DrawText(Color color, const char *txt, Vector2 pos, float size) {
+    void DrawText(Unity::Color color, const char *txt, Unity::Vector2 pos, float size) {
         if (isValid()) {
             jclass canvasView = _env->GetObjectClass(_cvsView);
             jmethodID drawtext = _env->GetMethodID(canvasView, "DrawText",
@@ -66,7 +66,7 @@ public:
     }
 
     // public void DrawCircle(Canvas cvs, int a, int r, int g, int b, float stroke, float posX, float posY, float radius) {
-    void DrawCircle(Color color, float stroke, Vector2 pos, float radius) {
+    void DrawCircle(Unity::Color color, float stroke, Unity::Vector2 pos, float radius) {
         if (isValid()) {
             jclass canvasView = _env->GetObjectClass(_cvsView);
             jmethodID drawcircle = _env->GetMethodID(canvasView, "DrawCircle",
@@ -76,7 +76,7 @@ public:
         }
     }
 
-    void DrawFilledCircle(Color color, Vector2 pos, float radius) {
+    void DrawFilledCircle(Unity::Color color, Unity::Vector2 pos, float radius) {
         if (isValid()) {
             jclass canvasView = _env->GetObjectClass(_cvsView);
             jmethodID drawfilledcircle = _env->GetMethodID(canvasView, "DrawFilledCircle",
@@ -86,11 +86,11 @@ public:
         }
     }
 
-    void DrawBox(Color color, float stroke, Rect rect) {
-        Unity::Vector2 v1 = Unity::Vector2(rect.x, rect.y);
-        Unity::Vector2 v2 = Unity::Vector2(rect.x + rect.w, rect.y);
-        Unity::Vector2 v3 = Unity::Vector2(rect.x + rect.w, rect.y + rect.h);
-        Unity::Vector2 v4 = Unity::Vector2(rect.x, rect.y + rect.h);
+    void DrawBox(Unity::Color color, float stroke, Unity::Rect rect) {
+        Unity::Vector2 v1 = Unity::Vector2(rect.fX, rect.fY);
+        Unity::Vector2 v2 = Unity::Vector2(rect.fX + rect.fWidth, rect.fY);
+        Unity::Vector2 v3 = Unity::Vector2(rect.fX + rect.fWidth, rect.fY + rect.fHeight);
+        Unity::Vector2 v4 = Unity::Vector2(rect.fX, rect.fY + rect.fHeight);
 
         DrawLine(color, stroke, v1, v2);
         DrawLine(color, stroke, v2, v3);
@@ -98,22 +98,22 @@ public:
         DrawLine(color, stroke, v4, v1);
     }
 
-    void DrawHorizontalHealthBar(Vector2 screenPos, float width, float maxHealth, float currentHealth) {
-        screenPos -= Vector2(0.0f, 8.0f);
-        DrawBox(Color(0, 0, 0, 255), 3, Rect(screenPos.X, screenPos.Y, width + 2, 5.0f));
-        screenPos += Vector2(1.0f, 1.0f);
-        Color clr = Color(0, 255, 0, 255);
+    void DrawHorizontalHealthBar(Unity::Vector2 screenPos, float width, float maxHealth, float currentHealth) {
+        screenPos -= Unity::Vector2(0.0f, 8.0f);
+        DrawBox(Unity::Color(0, 0, 0, 255), 3, Unity::Rect(screenPos.X, screenPos.Y, width + 2, 5.0f));
+        screenPos += Unity::Vector2(1.0f, 1.0f);
+        Unity::Color clr = Unity::Color(0, 255, 0, 255);
         float hpWidth = (currentHealth * width) / maxHealth;
         if (currentHealth <= (maxHealth * 0.6)) {
-            clr = Color(255, 255, 0, 255);
+            clr = Unity::Color(255, 255, 0, 255);
         }
         if (currentHealth < (maxHealth * 0.3)) {
-            clr = Color(255, 0, 0, 255);
+            clr = Unity::Color(255, 0, 0, 255);
         }
-        DrawBox(clr, 3, Rect(screenPos.X, screenPos.Y, hpWidth, 3.0f));
+        DrawBox(clr, 3, Unity::Rect(screenPos.X, screenPos.Y, hpWidth, 3.0f));
     }
 
-    void DrawCrosshair(Color clr, Vector2 center, int size = 20) {
+    void DrawCrosshair(Unity::Color clr, Unity::Vector2 center, int size = 20) {
         float x = center.X - (size / 2.0f);
         float y = center.Y - (size / 2.0f);
         DrawLine(clr, 3, Unity::Vector2(x, center.Y), Unity::Vector2(x + size, center.Y));
