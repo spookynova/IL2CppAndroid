@@ -253,13 +253,10 @@ namespace IL2CPP
 
     void Hook(void* m_Target, void* m_Replace, void** m_Backup)
     {
-        unsigned long m_PageSize = sysconf(_SC_PAGESIZE);
-        unsigned long m_Size = m_PageSize * sizeof(uintptr_t);
-        void* m_p = (void*)((uintptr_t)m_Target - ((uintptr_t)m_Target % m_PageSize) - m_PageSize);
-        if (mprotect(m_p, (size_t)m_Size, PROT_EXEC | PROT_READ | PROT_WRITE) == 0)
-        {
-            DobbyHook(m_Target, m_Replace, m_Backup);
-        }
+        if (!m_Target || !m_Replace || !m_Backup)
+            return;
+
+        DobbyHook(m_Target, m_Replace, m_Backup);
     }
 
     void Hook(const char* m_pClassName, const char* m_pMethodName, int m_iArgs, void* m_Replace, void** m_Backup)
