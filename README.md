@@ -1,4 +1,4 @@
-![Mod Preview](https://github.com/user-attachments/assets/eb869c13-709d-440e-88d8-177fe66fbb06)
+![Mod Preview](https://github.com/user-attachments/assets/1102b880-769e-4439-9221-2ac579f65235)
 
 # IL2CPP Android Template
 
@@ -33,12 +33,9 @@ This permission is required for overlaying UI elements, such as a floating menu,
 
 #### 2. Register the Service to Show the Menu
 To activate the floating menu, declare a service in `AndroidManifest.xml` to your targer app. This service will handle the display and lifecycle of the floating menu:
+
 ```xml
-<service
-        android:name="com.android.support.Launcher"
-        android:enabled="true"
-        android:exported="true"
-        android:stopWithTask="true" />
+<service android:name="com.android.support.Launcher" android:enabled="true" android:exported="true" android:stopWithTask="true" />
 ```
 
 #### 3. Call the Loader class
@@ -46,6 +43,11 @@ To integrate and initialize the floating menu loader, add the following code in 
 
 ```smali
 invoke-static {p0}, Lcom/android/support/Loader;->Start(Landroid/content/Context;)V
+```
+
+If you prefer not to use `Remap` , simply call this method:
+```smali
+invoke-static {p0}, Lcom/android/support/Main;->Start(Landroid/content/Context;)V
 ```
 
 ### Note
