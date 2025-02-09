@@ -15,14 +15,14 @@ Java_com_android_support_Natives_OnDrawLoad(JNIEnv *env, jclass clazz, jobject d
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_android_support_Natives_LoadNativeLibPath(JNIEnv *env, jclass clazz, jstring native_lib_dir) {
-    LOGE("Load injector in pid %d", getpid());
-    const char* dir = env->GetStringUTFChars(native_lib_dir, 0);
-    std::string path = std::string(dir) + "/libLoader.so";
+    LOGE(OBFUSCATE("Load injector in pid %d"), getpid());
+    const char* dir = env->GetStringUTFChars(native_lib_dir, nullptr);
+    std::string path = std::string(dir) + std::string (OBFUSCATE("/libLoader.so"));
 
     //Open the library containing the actual code
     void *open = dlopen(path.c_str(), RTLD_NOW);
     if (open == nullptr) {
-        LOGE("Error opening %s %s", path.c_str(), dlerror());
+        LOGE(OBFUSCATE("Error opening %s %s"), path.c_str(), dlerror());
     }
     RemapTools::RemapLibrary(OBFUSCATE("libLoader.so"));
 }

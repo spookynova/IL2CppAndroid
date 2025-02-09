@@ -24,7 +24,7 @@ namespace RemapTools {
         std::vector<ProcMapInfo> returnVal;
 
         char buffer[512];
-        FILE *fp = fopen("/proc/self/maps", "re");
+        FILE *fp = fopen(OBFUSCATE("/proc/self/maps"), OBFUSCATE("re"));
         if (fp != nullptr) {
             while (fgets(buffer, sizeof(buffer), fp)) {
                 if (strstr(buffer, name.c_str())) {
@@ -33,7 +33,7 @@ namespace RemapTools {
                     char path[255];
                     char dev[25];
 
-                    sscanf(buffer, "%lx-%lx %s %ld %s %ld %s", &info.start, &info.end, perms, &info.offset, dev, &info.inode, path);
+                    sscanf(buffer, OBFUSCATE("%lx-%lx %s %ld %s %ld %s"), &info.start, &info.end, perms, &info.offset, dev, &info.inode, path);
 
                     //Process Perms
                     if (strchr(perms, 'r')) info.perms |= PROT_READ;
@@ -67,9 +67,9 @@ namespace RemapTools {
             }
 
             if (map == nullptr) {
-                LOGE("Failed to Allocate Memory: %s", strerror(errno));
+                LOGE(OBFUSCATE("Failed to Allocate Memory: %s"), strerror(errno));
             }
-            LOGI("Allocated at address %p with size of %zu", map, size);
+            LOGI(OBFUSCATE("Allocated at address %p with size of %zu"), map, size);
 
             //Copy to new location
             std::memmove(map, address, size);

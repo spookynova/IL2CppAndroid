@@ -2,7 +2,7 @@
 // Created by rosetta on 16/09/2024.
 //
 
-#include <stdio.h>
+#include <cstdio>
 #include <string>
 #include <jni.h>
 #include <dlfcn.h>
@@ -19,16 +19,16 @@ bool remapLoaded = false;
 
 std::string GetNativeLibraryDirectory() {
     char buffer[512];
-    FILE *fp = fopen("/proc/self/maps", "re");
+    FILE *fp = fopen(OBFUSCATE("/proc/self/maps"), OBFUSCATE("re"));
     if (fp != nullptr) {
         while (fgets(buffer, sizeof(buffer), fp)) {
-            if (strstr(buffer, "libLoader.so")) {
+            if (strstr(buffer, OBFUSCATE("libLoader.so"))) {
                 RemapTools::ProcMapInfo info{};
                 char perms[10];
                 char path[255];
                 char dev[25];
 
-                sscanf(buffer, "%lx-%lx %s %ld %s %ld %s", &info.start, &info.end, perms,
+                sscanf(buffer, OBFUSCATE("%lx-%lx %s %ld %s %ld %s"), &info.start, &info.end, perms,
                        &info.offset, dev, &info.inode, path);
                 info.path = path;
 
@@ -47,21 +47,21 @@ std::string GetNativeLibraryDirectory() {
 
 
 jint JNI_OnLoad(JavaVM *vm, void *reserved) {
-    LOGI("libLoader.so loaded in %d", getpid());
+    LOGI(OBFUSCATE("libLoader.so loaded in %d"), getpid());
 
     std::string native = GetNativeLibraryDirectory();
     if (native.empty()) {
-        LOGE("Error getting native library directory");
+        LOGE(OBFUSCATE("Error getting native library directory"));
         exit(1);
     }
 
-    LOGI("Found native library directory: %s", native.c_str());
-    std::string path = native + "libGameHelper.so";
+    LOGI(OBFUSCATE("Found native library directory: %s"), native.c_str());
+    std::string path = native + std::string(OBFUSCATE("libGameHelper.so"));
 
     // Open the library containing the actual code
     void *open = dlopen(path.c_str(), RTLD_NOW);
     if (open == nullptr) {
-        LOGE("Error opening libGameHelper.so %s", dlerror());
+        LOGE(OBFUSCATE("Error opening libGameHelper.so %s"), dlerror());
         return JNI_ERR;
     }
 
