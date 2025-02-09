@@ -12,6 +12,9 @@ import android.widget.LinearLayout;
 import com.android.support.Menu;
 import com.android.support.Preferences;
 
+import org.lsposed.lsparanoid.Obfuscate;
+
+@Obfuscate
 public class IButton {
 
     private Context context;

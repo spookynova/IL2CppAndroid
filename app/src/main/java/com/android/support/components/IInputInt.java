@@ -24,6 +24,9 @@ import android.widget.Toast;
 import com.android.support.Menu;
 import com.android.support.Preferences;
 
+import org.lsposed.lsparanoid.Obfuscate;
+
+@Obfuscate
 public class IInputInt {
 
     private Context context;

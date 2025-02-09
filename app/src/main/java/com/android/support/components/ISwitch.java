@@ -13,6 +13,9 @@ import android.widget.Switch;
 import com.android.support.Menu;
 import com.android.support.Preferences;
 
+import org.lsposed.lsparanoid.Obfuscate;
+
+@Obfuscate
 public class ISwitch {
 
     private Context context;
@@ -51,7 +54,7 @@ public class ISwitch {
         }
 
         if (Preferences.loadPrefBool(featName, featNum, swiOn)) {
-            mSwitch.setBackgroundColor(Color.parseColor("#408C80FF"));
+            mSwitch.setBackgroundColor(Color.parseColor("#40EC4857"));
         } else {
             mSwitch.setBackgroundColor(Color.parseColor("#00000000"));
         }
@@ -64,7 +67,7 @@ public class ISwitch {
         mSwitch.setOnCheckedChangeListener((compoundButton, bool) -> {
             if (mSwitch.isChecked()) {
                 Preferences.changeFeatureBool(featName, featNum, bool);
-                mSwitch.setBackgroundColor(Color.parseColor("#408C80FF"));
+                mSwitch.setBackgroundColor(Color.parseColor("#40EC4857"));
             } else {
                 Preferences.changeFeatureBool(featName, featNum, bool);
                 mSwitch.setBackgroundColor(Color.parseColor("#00000000"));

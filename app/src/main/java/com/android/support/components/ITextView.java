@@ -8,6 +8,9 @@ import android.widget.TextView;
 
 import com.android.support.Menu;
 
+import org.lsposed.lsparanoid.Obfuscate;
+
+@Obfuscate
 public class ITextView {
     private Context context;
     private Typeface typeface;

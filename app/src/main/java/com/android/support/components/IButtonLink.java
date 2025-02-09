@@ -12,6 +12,9 @@ import android.widget.Toast;
 
 import com.android.support.Menu;
 
+import org.lsposed.lsparanoid.Obfuscate;
+
+@Obfuscate
 public class IButtonLink {
 
     private Context context;

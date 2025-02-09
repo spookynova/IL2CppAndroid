@@ -12,6 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.android.support.Preferences;
 
+import org.lsposed.lsparanoid.Obfuscate;
+
+@Obfuscate
 public class ICheckBox {
 
     private Context context;
@@ -45,7 +48,7 @@ public class ICheckBox {
         mLayoutContainer.addView(checkBox);
 
         if (Preferences.loadPrefBool(featName, featNum, switchedOn)) {
-            mLayoutContainer.setBackgroundColor(Color.parseColor("#408C80FF"));
+            mLayoutContainer.setBackgroundColor(Color.parseColor("#40EC4857"));
         } else {
             mLayoutContainer.setBackgroundColor(Color.parseColor("#00000000"));
         }
@@ -57,7 +60,7 @@ public class ICheckBox {
         checkBox.setOnCheckedChangeListener((v, isChecked) -> {
             if (checkBox.isChecked()) {
                 Preferences.changeFeatureBool(featName, featNum, isChecked);
-                mLayoutContainer.setBackgroundColor(Color.parseColor("#408C80FF"));
+                mLayoutContainer.setBackgroundColor(Color.parseColor("#40EC4857"));
             } else {
                 Preferences.changeFeatureBool(featName, featNum, isChecked);
                 mLayoutContainer.setBackgroundColor(Color.parseColor("#00000000"));

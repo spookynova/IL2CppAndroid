@@ -14,10 +14,12 @@ import android.widget.TextView;
 import com.android.support.Menu;
 import com.android.support.Preferences;
 
+import org.lsposed.lsparanoid.Obfuscate;
+
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-
+@Obfuscate
 public class ISpinner {
 
     private Context context;

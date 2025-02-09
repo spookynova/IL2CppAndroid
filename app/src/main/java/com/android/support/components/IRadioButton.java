@@ -15,10 +15,13 @@ import android.widget.TextView;
 import com.android.support.Menu;
 import com.android.support.Preferences;
 
+import org.lsposed.lsparanoid.Obfuscate;
+
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+@Obfuscate
 public class IRadioButton {
 
     private Context context;
@@ -41,6 +44,7 @@ public class IRadioButton {
         final RadioGroup radioGroup = new RadioGroup(context);
         radioGroup.setPadding(10, 5, 10, 5);
         radioGroup.setOrientation(LinearLayout.VERTICAL);
+
         radioGroup.addView(textView);
 
         for (int i = 0; i < lists.size(); i++) {
