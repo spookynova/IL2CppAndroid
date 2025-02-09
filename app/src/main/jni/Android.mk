@@ -31,7 +31,6 @@ LOCAL_SRC_FILES := Main.cpp \
 	KittyMemory/MemoryPatch.cpp \
     KittyMemory/MemoryBackup.cpp \
     KittyMemory/KittyUtils.cpp \
-    IL2CPPResolver/IL2CPP_Resolver.hpp \
 
 include $(BUILD_SHARED_LIBRARY)
 
