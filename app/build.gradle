@@ -36,26 +36,27 @@ android {
         signingConfig signingConfigs.debug
     }
 
-    // keystore
-    signingConfigs {
+    // You can set your own signingConfigs here
+
+    /*signingConfigs {
         release {
             storeFile file('R3DNETWORK.jks')
-            storePassword '31ad562aae55'
+            storePassword 'your password'
             keyAlias 'rrosetta'
-            keyPassword '31ad562aae55'
+            keyPassword 'your password'
             enableV1Signing = false
             enableV3Signing = true
         }
 
         debug {
             storeFile file('R3DNETWORK.jks')
-            storePassword '31ad562aae55'
+            storePassword 'your password'
             keyAlias 'rrosetta'
-            keyPassword '31ad562aae55'
+            keyPassword 'your password'
             enableV1Signing = false
             enableV3Signing = true
         }
-    }
+    }*/
 
 
     buildTypes {
@@ -63,13 +64,13 @@ android {
             shrinkResources false
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            //signingConfig signingConfigs.release
         }
         debug {
             shrinkResources false
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.debug
+            //signingConfig signingConfigs.debug
         }
     }
     ndkVersion "27.1.12297006"
