@@ -15,30 +15,30 @@ void PlayerUpdate(void *_this) {
 // ----------------- ESP -----------------
 // If you have an esp feature, you can draw it here
 // You can use the Draw class to draw lines, text, etc.
-// Example: esp.DrawCrosshair(Color::Red(),  Vector2(screenWidth / 2, screenHeight / 2), 10);
+// Example: esp.DrawCrosshair(Unity::Color::Red(),  Unity::Vector2(screenWidth / 2, screenHeight / 2), 10);
 
 void DrawESP(Draw esp, int screenWidth, int screenHeight) {
 
-    // Example to get camera
-    // Unity::CCamera *camera = Unity::Camera::GetMain();
+     //Example to get camera
+     //Unity::CCamera *camera = Unity::Camera::GetMain();
 
-    // Example to get world to screen point
+     //Example to get world to screen point
 
-    // Unity::Vector3 worldPos = Unity::Vector3(0, 0, 0);
-    // Unity::Vector3 screenPos;
-    // camera->WorldToScreen(worldPos, screenPos,4);
+     //Unity::Vector3 worldPos = Unity::Vector3(0, 0, 0);
+     //Unity::Vector3 screenPos;
+     //camera->WorldToScreen(worldPos, screenPos,2);
 
     if (Vars::PlayerData.ESPCrosshair) {
         // Draw ESP here
-        Color crosshair_color;
+        Unity::Color crosshair_color;
         int crosshair_size;
 
         if (Vars::PlayerData.CrosshairColor == 0) {
-            crosshair_color = Color::Red();
+            crosshair_color = Unity::Color::Red();
         } else if (Vars::PlayerData.CrosshairColor == 1) {
-            crosshair_color = Color::Green();
+            crosshair_color = Unity::Color::Green();
         } else {
-            crosshair_color = Color::Blue();
+            crosshair_color = Unity::Color::Blue();
         }
 
 
@@ -48,6 +48,6 @@ void DrawESP(Draw esp, int screenWidth, int screenHeight) {
             crosshair_size = 1;
         }
 
-        esp.DrawCrosshair(crosshair_color,  Vector2(screenWidth / 2, screenHeight / 2), crosshair_size * 10);
+        esp.DrawCrosshair(crosshair_color,  Unity::Vector2(screenWidth / 2, screenHeight / 2), crosshair_size * 10);
     }
 }
