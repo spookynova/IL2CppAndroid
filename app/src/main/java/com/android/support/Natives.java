@@ -14,8 +14,6 @@ public abstract class Natives {
 
     public static native boolean IsGameLibLoaded();
 
-    public static native boolean IsEspEnabled();
-
     public static native void LoadNativeLibPath(String path);
 
     public static native void OnDrawLoad(DrawView drawView, Canvas canvas);
