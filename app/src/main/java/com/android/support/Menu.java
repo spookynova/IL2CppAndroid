@@ -50,8 +50,7 @@ public class Menu {
     public static int MENU_WIDTH = 290;
     public static int POS_X = 0;
     public static int POS_Y = 100;
-    public static float MENU_CORNER_RADIUS = 10f;
-    float ICON_ALPHA = 0.7f; // Transparent
+    public static float MENU_CORNER_RADIUS = 0f;
     boolean isExpanded = false;
     boolean overlayRequired;
 
@@ -116,7 +115,6 @@ public class Menu {
         __mRootContainer = new RelativeLayout(context); // Markup on which two markups of the icon and the menu itself will be placed
         __mCollapsed = new RelativeLayout(context); // Markup of the icon (when the menu is minimized)
         __mCollapsed.setVisibility(View.GONE);
-        __mCollapsed.setAlpha(ICON_ALPHA);
 
         //********** The box of the mod menu **********
         __mExpanded = new LinearLayout(context); // Menu markup (when the menu is expanded)
