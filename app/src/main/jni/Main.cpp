@@ -1,6 +1,6 @@
 #include <list>
 #include <vector>
-#include <string.h>
+#include <cstring>
 #include <pthread.h>
 #include <thread>
 #include <cstring>
@@ -18,11 +18,7 @@
 #include "Includes/Utils.h"
 #include "Includes/RemapTools.h"
 #include "KittyMemory/MemoryPatch.h"
-#include "Includes/ObsecuresTypes.h"
-#include "Includes/Unity/Vector3.h"
-#include "Includes/Unity/Vector2.h"
-#include "Includes/Unity/Color.h"
-#include "Includes/Unity/Rect.h"
+#include "Includes/ObscuredTypes.h"
 #include "Includes/ESPManager.h"
 #include "Includes/Draw.h"
 #include "Hacks/Vars.h"
@@ -54,6 +50,8 @@ void *hack_thread(void *) {
 
     LOGI(OBFUSCATE("%s has been loaded"), (const char *) IL2CPP_MODULE);
     LOGI(OBFUSCATE("Trying to hook in il2cpp now..."));
+
+    //sleep(5); // this is optional depending on your game if it takes time to load all the symbols
 
     do {
         sleep(1);
