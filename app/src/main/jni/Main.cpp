@@ -14,7 +14,7 @@
 #include "Includes/Logger.h"
 #include "Includes/obfuscate.h"
 #include "dobby/dobby.h"
-#include "IL2CPPResolver/IL2CPP_Resolver.hpp"
+#include "UnityResolve/UnityResolve.hpp"
 #include "Includes/Utils.h"
 #include "Includes/RemapTools.h"
 #include "KittyMemory/MemoryPatch.h"
@@ -33,8 +33,14 @@
 void hook_thread() {
     // ----------------- Hooks -------------------
     // You can hook your methods here
-    // if the class have namespace, you can use it like this:
-    // IL2CPP::Hook("WarPolygon.CPlayerLocal", "get_CurrentHeight", 0, (void*) HookPlayerCurrentHeight, (void**)&old_PlayerCurrentHeight);
+    // If your class have a namespace, you don't need to add the namespace to the class name
+    // Example RedNetwork.PlayerManager -> PlayerManager
+
+    // m_pArgs = {} if the method doesn't have any arguments
+    // if you're lazy to input type data on args, you can use "*" depends how many arguments the method have
+    // Example: m_pArgs = {"*", "*", "*"} if the method have 3 arguments
+    UnityResolve::Hook(OBFUSCATE("PlayerManager"), OBFUSCATE("Update"), {}, (void *) PlayerUpdate, (void **) &orig_PlayerUpdate);
+
 }
 
 
@@ -53,11 +59,7 @@ void *hack_thread(void *) {
 
     //sleep(5); // this is optional depending on your game if it takes time to load all the symbols
 
-    do {
-        sleep(1);
-    } while (!IL2CPP::Initialize());
-
-    LOGI(OBFUSCATE("IL2CPP Resolver initialized"));
+    UnityResolve::Init(dlopen(IL2CPP_MODULE, RTLD_NOW));
 
     // Start hooking
     LOGI(OBFUSCATE("Starting hooks"));
