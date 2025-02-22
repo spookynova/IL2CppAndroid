@@ -29,48 +29,22 @@ android {
         minSdkVersion 19
         targetSdk 34
         versionCode 1
-        versionName "1.2"
+        versionName "1.3"
         ndk {
             abiFilters 'armeabi-v7a', 'arm64-v8a' , 'x86', 'x86_64'
         }
-        signingConfig signingConfigs.debug
     }
-
-    // You can set your own signingConfigs here
-
-    /*signingConfigs {
-        release {
-            storeFile file('R3DNETWORK.jks')
-            storePassword 'your password'
-            keyAlias 'rrosetta'
-            keyPassword 'your password'
-            enableV1Signing = false
-            enableV3Signing = true
-        }
-
-        debug {
-            storeFile file('R3DNETWORK.jks')
-            storePassword 'your password'
-            keyAlias 'rrosetta'
-            keyPassword 'your password'
-            enableV1Signing = false
-            enableV3Signing = true
-        }
-    }*/
-
 
     buildTypes {
         release {
             shrinkResources false
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            //signingConfig signingConfigs.release
         }
         debug {
             shrinkResources false
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            //signingConfig signingConfigs.debug
         }
     }
     ndkVersion "27.1.12297006"
