@@ -7,38 +7,35 @@
 void (*orig_PlayerUpdate)(void *_this);
 
 void PlayerUpdate(void *_this) {
-    // Call the original function
+    if (_this != nullptr){
 
-    // orig_PlayerUpdate(_this);
+    }
+    // Call the original function
+    orig_PlayerUpdate(_this);
 }
 
 // ----------------- ESP -----------------
 // If you have an esp feature, you can draw it here
 // You can use the Draw class to draw lines, text, etc.
-// Example: esp.DrawCrosshair(Unity::Color::Red(),  Unity::Vector2(screenWidth / 2, screenHeight / 2), 10);
 
 void DrawESP(Draw esp, int screenWidth, int screenHeight) {
 
-     //Example to get camera
-     //Unity::CCamera *camera = Unity::Camera::GetMain();
-
-     //Example to get world to screen point
-
-     //Unity::Vector3 worldPos = Unity::Vector3(0, 0, 0);
-     //Unity::Vector3 screenPos;
-     //camera->WorldToScreen(worldPos, screenPos,2);
+    //Example to get camera
+    //UnityResolve::UnityType::Camera *camera = UnityResolve::UnityType::Camera::GetMain();
+    // Full documentation of UnityResolve.hpp
+    // https://github.com/issuimo/UnityResolve.hpp
 
     if (Vars::PlayerData.ESPCrosshair) {
         // Draw ESP here
-        Unity::Color crosshair_color;
+        UnityResolve::UnityType::Color crosshair_color = UnityResolve::UnityType::Color(255, 0, 0, 255);
         int crosshair_size;
 
         if (Vars::PlayerData.CrosshairColor == 0) {
-            crosshair_color = Unity::Color::Red();
+            crosshair_color = UnityResolve::UnityType::Color(255, 0, 0, 255);
         } else if (Vars::PlayerData.CrosshairColor == 1) {
-            crosshair_color = Unity::Color::Green();
+            crosshair_color = UnityResolve::UnityType::Color(0, 255, 0, 255);
         } else {
-            crosshair_color = Unity::Color::Blue();
+            crosshair_color = UnityResolve::UnityType::Color(0, 0, 255, 255);
         }
 
 
@@ -48,6 +45,6 @@ void DrawESP(Draw esp, int screenWidth, int screenHeight) {
             crosshair_size = 1;
         }
 
-        esp.DrawCrosshair(crosshair_color,  Unity::Vector2(screenWidth / 2, screenHeight / 2), crosshair_size * 10);
+        esp.DrawCrosshair(crosshair_color,  UnityResolve::UnityType::Vector2(screenWidth / 2, screenHeight / 2), crosshair_size * 10);
     }
 }
