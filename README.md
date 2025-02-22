@@ -13,11 +13,24 @@ This project is based on [LGL Mod Menu](https://github.com/LGLTeam/Android-Mod-M
 
 ## Credits
 
-- [IL2CPP Resolver](https://github.com/sneakyevil/IL2CPP_Resolver)
-- [IL2CPP Resolver Android Version](https://github.com/KING-UTKARSH/Il2cpp_Resolver_Android)
+- [UnityResolve](https://github.com/issuimo/UnityResolve.hpp)
 - [Dobby](https://github.com/jmpews/Dobby/)
 - [Remap Hide](https://github.com/reveny/Android-Library-Remap-Hide)
 
+
+> [!NOTE]\
+> Starting from version 1.3, `Il2cppResolver` has been replaced with `UnityResolve` to offer more extensive API support and improved functionality.
+> 
+> New feature suggestions or bugs can be commit as issues.
+>
+> And this project containing assets like font, you also need to add the font from assets to game assets, otherwise the game will crash immediately. If you want to disable it, go to Menu.java and replace
+> > ```java
+> > typeface = Typeface.createFromAsset(context.getAssets(), "Pixellari.ttf");
+> > ```
+> > to
+> > ```java
+> > typeface = Typeface.DEFAULT;
+> > ```
 
 ## How to use
 To enable and display a floating menu in your target app, follow these steps:
@@ -48,20 +61,6 @@ invoke-static {p0}, Lcom/android/support/Loader;->Start(Landroid/content/Context
 If you prefer not to use `Remap` , simply call this method:
 ```smali
 invoke-static {p0}, Lcom/android/support/Main;->Start(Landroid/content/Context;)V
-```
-
-### Note
-
-And this project containing assets like font, you also need to add the font from assets to game assets, otherwise the game will crash immediately. If you want to disable it, go to Menu.java and replace
-
-```java
-typeface = Typeface.createFromAsset(context.getAssets(), "Pixellari.ttf");
-```
-
-to
-
-```java
-typeface = Typeface.DEFAULT;
 ```
 
 ## Disclaimer
