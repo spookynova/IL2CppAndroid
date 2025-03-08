@@ -8,6 +8,8 @@
 #include <string>
 #include <cstdlib>
 #include "Logger.h"
+#include "Fonts/Pixellari.h"
+
 
 typedef unsigned long DWORD;
 static uintptr_t libBase;
@@ -95,6 +97,16 @@ uintptr_t string2Offset(const char *c) {
 namespace ToastLength {
     inline const int LENGTH_LONG = 1;
     inline const int LENGTH_SHORT = 0;
+}
+
+jbyteArray LoadFontData(JNIEnv *env, jclass thiz, jobject ctx) {
+    // Create a byte array in Java to hold the font data
+    jbyteArray fontData = env->NewByteArray(std::size(font));
+
+    // Set the content of the byte array with the embedded font data
+    env->SetByteArrayRegion(fontData, 0, std::size(font), (jbyte*)font);
+
+    return fontData;  // Return the font data as a byte array
 }
 
 #endif

@@ -19,6 +19,9 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -87,9 +90,34 @@ public class Menu {
     public Menu(Context context) {
         getContext  = context;
         drawView    = new DrawView(getContext);
-        typeface    = Typeface.DEFAULT;
         Preferences.context = context;
+        InitTypeFace(getContext);
         InitComponent(context);
+    }
+
+    private void InitTypeFace(Context context){
+        typeface = Typeface.DEFAULT; //Init to default, if errors occurs, prevent crashes
+        byte[] fontData = Natives.LoadFontData(context);
+        if (fontData != null) {
+            File tempFontFile = null;
+            try {
+                tempFontFile = File.createTempFile("font_file", ".ttf", context.getCacheDir());
+                try (FileOutputStream fos = new FileOutputStream(tempFontFile)) {
+                    fos.write(fontData);
+                }
+                if (tempFontFile.exists()) {
+                    typeface = Typeface.createFromFile(tempFontFile);
+                } else {
+                    Log.e(TAG, "Failed to create or find font file.");
+                }
+            } catch (IOException e) {
+                Log.e(TAG, "Error occurred loading Font,Default will be used",e);
+            } finally {
+                if (tempFontFile != null && tempFontFile.exists()) {
+                    tempFontFile.delete();
+                }
+            }
+        }
     }
 
     private void InitComponent(Context context) {
