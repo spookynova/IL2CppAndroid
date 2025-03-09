@@ -10,27 +10,10 @@ This project is based on [LGL Mod Menu](https://github.com/LGLTeam/Android-Mod-M
   - Integrated [BlackObfuscator](https://github.com/CodingGay/BlackObfuscator-ASPlugin) for enhanced code obfuscation.
   - Added [LSParanoid](https://github.com/LSPosed/LSParanoid) to provide string encryption for securing sensitive text data.
 
-
-## Credits
-
-- [UnityResolve](https://github.com/issuimo/UnityResolve.hpp)
-- [Dobby](https://github.com/jmpews/Dobby/)
-- [Remap Hide](https://github.com/reveny/Android-Library-Remap-Hide)
-
-
 > [!NOTE]\
 > Starting from version 1.3, `Il2cppResolver` has been replaced with `UnityResolve` to offer more extensive API support and improved functionality.
 > 
 > New feature suggestions or bugs can be commit as issues.
->
-> And this project containing assets like font, you also need to add the font from assets to game assets, otherwise the game will crash immediately. If you want to disable it, go to Menu.java and replace
-> > ```java
-> > typeface = Typeface.createFromAsset(context.getAssets(), "Pixellari.ttf");
-> > ```
-> > to
-> > ```java
-> > typeface = Typeface.DEFAULT;
-> > ```
 
 ## How to use
 To enable and display a floating menu in your target app, follow these steps:
@@ -62,6 +45,49 @@ If you prefer not to use `Remap` , simply call this method:
 ```smali
 invoke-static {p0}, Lcom/android/support/Main;->Start(Landroid/content/Context;)V
 ```
+
+## Customizing Fonts  
+
+You can integrate custom fonts into your project using a `C array`. To generate the required font data, you can use a hexadecimal editor such as [ImHex](https://github.com/WerWolv/ImHex).  
+
+#### 1. Exporting the Font  
+
+To export a font, follow these steps:  
+
+1. Load the `.ttf` font file into ImHex.  
+2. Navigate to the **File** tab and select **Export**.  
+3. Choose **Text Formatted Bytes** -> **C Array**.  
+4. Save the exported data as a `.h` file.  
+
+#### 2. Importing the Font into Your Project  
+
+1. Copy the exported `.h` font file to the `Includes/Fonts/` directory.  
+2. Open `Utils.h` located in the `Includes` folder.  
+3. Locate the `LoadFontData` method and modify it to use the newly exported font.  
+
+#### Example: Modifying `LoadFontData`  
+
+```cpp
+jbyteArray LoadFontData(JNIEnv *env, jclass thiz, jobject ctx) {
+    // Create a byte array in Java to hold the font data
+    jbyteArray fontData = env->NewByteArray(std::size(font));
+
+    // Populate the byte array with the embedded font data
+    env->SetByteArrayRegion(fontData, 0, std::size(font), (jbyte*)font);
+
+    return fontData;  // Return the font data as a byte array
+}
+```
+
+#### 3. Updating the Font Variable
+Replace the `font` variable in the code above with the array from your exported font file. This ensures that the custom font is correctly loaded and utilized in the project.
+
+## Credits
+
+- [UnityResolve](https://github.com/issuimo/UnityResolve.hpp)
+- [Dobby](https://github.com/jmpews/Dobby/)
+- [Remap Hide](https://github.com/reveny/Android-Library-Remap-Hide)
+
 
 ## Disclaimer
 This project is for Educational Use only. We do not condone this project being used to gain an advantage against other people. This project was made for fun.
