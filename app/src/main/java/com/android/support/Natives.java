@@ -17,4 +17,7 @@ public abstract class Natives {
     public static native void LoadNativeLibPath(String path);
 
     public static native void OnDrawLoad(DrawView drawView, Canvas canvas);
+
+    public static native byte[] LoadFontData(Context context);
+
 }
