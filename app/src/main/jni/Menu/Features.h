@@ -99,7 +99,6 @@ int RegisterMenu(JNIEnv *env) {
             {OBFUSCATE("Init"),            OBFUSCATE("(Landroid/content/Context;Landroid/widget/TextView;Landroid/widget/TextView;)V"), reinterpret_cast<void *>(Init)},
             {OBFUSCATE("LoadFontData"),  OBFUSCATE("(Landroid/content/Context;)[B"),                                                          reinterpret_cast<void *>(LoadFontData)},
             {OBFUSCATE("GetFeatureList"),  OBFUSCATE("()[Ljava/lang/String;"),                                                          reinterpret_cast<void *>(GetFeatureList)},
-            {OBFUSCATE("CheckOverlayPermission"), OBFUSCATE("(Landroid/content/Context;)V"),              reinterpret_cast<void *>(CheckOverlayPermission)},
     };
 
     jint ret = env->RegisterNatives(clazz, methods, sizeof(methods) / sizeof(JNINativeMethod));

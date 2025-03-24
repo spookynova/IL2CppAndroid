@@ -1,14 +1,7 @@
 package com.android.support;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Handler;
-import android.provider.Settings;
-import android.util.Log;
-import android.widget.Toast;
 
 import org.lsposed.lsparanoid.Obfuscate;
 
@@ -25,6 +18,11 @@ public class Main {
     public static void Start(Context context) {
 //        CrashHandler.init(context, false);
         Natives.LoadNativeLibPath(context.getApplicationInfo().nativeLibraryDir);
-        Natives.CheckOverlayPermission(context);
+        Intent intent = new Intent(context, com.android.support.Launcher.class);
+        intent.putExtra("overlayGranted",Utils.CheckOverlayPermissions(context));
+        if(!Utils.CheckOverlayPermissions(context)){
+            Utils.RequestOverlayPermissions(context);
+        }
+        context.startService(intent);
     }
 }

@@ -455,11 +455,11 @@ public class Menu {
     }
 
     public void onDestroy() {
-        if (__frameLayout != null) {
+        if (__frameLayout != null && mWindowManager!=null) {
             mWindowManager.removeView(__frameLayout);
         }
 
-        if (drawView != null) {
+        if (drawView != null && mWindowManager!=null) {
             mWindowManager.removeView(drawView);
         }
     }
