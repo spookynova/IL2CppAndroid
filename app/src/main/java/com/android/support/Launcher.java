@@ -2,9 +2,11 @@ package com.android.support;
 
 import android.app.ActivityManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.View;
 
 import org.lsposed.lsparanoid.Obfuscate;
@@ -18,17 +20,42 @@ public class Launcher extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
         menu = new Menu(this);
-        menu.SetWindowManagerWindowService();
-        menu.ShowMenu();
+    }
 
-        //Create a handler for this Class
+    private void startMenu() {
+        if (menu != null) {
+            menu.SetWindowManagerWindowService();
+            menu.ShowMenu();
+
+            final Handler handler = new Handler();
+            handler.post(new Runnable() {
+                public void run() {
+                    UpdateMenuVisibility();
+                    handler.postDelayed(this, 1000);
+                }
+            });
+        }
+    }
+
+    private void pollForPermissionGrant(Context context) {
         final Handler handler = new Handler();
         handler.post(new Runnable() {
+            private int attempts = 0;
+
+            @Override
             public void run() {
-               Thread();
-                handler.postDelayed(this, 1000);
+                if (Utils.CheckOverlayPermissions(context)) {
+                    if (BuildConfig.DEBUG) Log.d(Menu.TAG, "Permission Granted Starting Menu");
+                    startMenu();
+                } else if (attempts < 10) {
+                    if (BuildConfig.DEBUG) Log.d(Menu.TAG, "Permission Not Granted,Attempt: " + attempts + " Checking Again");
+                    attempts++;
+                    handler.postDelayed(this, 1000);
+                } else {
+                    if (BuildConfig.DEBUG) Log.d(Menu.TAG, "Permission Not Granted,Attempt: " + attempts + " Stopping service");
+                    stopSelf();
+                }
             }
         });
     }
@@ -45,7 +72,7 @@ public class Launcher extends Service {
         return runningAppProcessInfo.importance != 100;
     }
 
-    private void Thread() {
+    private void UpdateMenuVisibility() {
         if (isNotInGame()) {
             menu.setVisibility(View.INVISIBLE);
             menu.hideDrawView();
@@ -74,6 +101,13 @@ public class Launcher extends Service {
 
     //Override our Start Command so the Service doesnt try to recreate itself when the App is closed
     public int onStartCommand(Intent intent, int i, int i2) {
+        if (intent != null) {
+            if (intent.getBooleanExtra(Main.OVERLAY_PERMISSION_KEY, true)) {
+                startMenu();
+            } else {
+                pollForPermissionGrant(this);
+            }
+        }
         return Service.START_NOT_STICKY;
     }
 }

@@ -15,8 +15,8 @@ import org.lsposed.lsparanoid.Obfuscate;
 @Obfuscate
 public class ICategory {
 
-    private Context context;
-    private Typeface typeface;
+    private final Context context;
+    private final Typeface typeface;
 
     public ICategory(Context context, Typeface typeface) {
         this.context = context;

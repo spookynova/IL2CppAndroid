@@ -8,8 +8,6 @@ public abstract class Natives {
 
     public static native void Init(Context context, TextView title, TextView subTitle);
 
-    public static native void CheckOverlayPermission(Context context);
-
     public static native String[] GetFeatureList();
 
     public static native boolean IsGameLibLoaded();

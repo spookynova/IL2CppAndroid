@@ -1,30 +1,14 @@
 package com.android.support;
 
-
-import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.Settings;
 import android.util.TypedValue;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import org.lsposed.lsparanoid.Obfuscate;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
 
 @Obfuscate
 public class Utils {
@@ -40,10 +24,20 @@ public class Utils {
 
     //For our image a little converter
     public static int convertDipToPixels(Context context,int i) {
-        return (int) ((((float) i) * context.getResources().getDisplayMetrics().density) + 0.5f);
+        return Math.round(i * context.getResources().getDisplayMetrics().density);
     }
 
     public static int dp(Context context,int i) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (float) i, context.getResources().getDisplayMetrics());
+    }
+
+    public static boolean CheckOverlayPermissions(Context context){
+        return Build.VERSION.SDK_INT <= Build.VERSION_CODES.M || Settings.canDrawOverlays(context);
+    }
+
+    public static void RequestOverlayPermissions(Context context){
+        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                Uri.parse("package:" + context.getPackageName()));
+        context.startActivity(intent);
     }
 }

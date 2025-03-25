@@ -88,18 +88,17 @@ void Changes(JNIEnv *env, jclass clazz, jobject obj,jint featNum, jstring featNa
 
 
 int RegisterMenu(JNIEnv *env) {
-    jclass clazz = env->FindClass("com/android/support/Natives");
+    jclass clazz = env->FindClass(OBFUSCATE("com/android/support/Natives"));
     if (!clazz) {
         LOGE(OBFUSCATE("Natives class not found"));
         return JNI_ERR; // Class not found
     }
 
     static const JNINativeMethod methods[] = {
-            {OBFUSCATE("IsGameLibLoaded"), OBFUSCATE("()Z"),                    reinterpret_cast<void *>(isGameLibLoaded)},
-            {OBFUSCATE("Init"),            OBFUSCATE("(Landroid/content/Context;Landroid/widget/TextView;Landroid/widget/TextView;)V"), reinterpret_cast<void *>(Init)},
-            {OBFUSCATE("LoadFontData"),  OBFUSCATE("(Landroid/content/Context;)[B"),                                                          reinterpret_cast<void *>(LoadFontData)},
-            {OBFUSCATE("GetFeatureList"),  OBFUSCATE("()[Ljava/lang/String;"),                                                          reinterpret_cast<void *>(GetFeatureList)},
-            {OBFUSCATE("CheckOverlayPermission"), OBFUSCATE("(Landroid/content/Context;)V"),              reinterpret_cast<void *>(CheckOverlayPermission)},
+            {OBFUSCATE("IsGameLibLoaded")   , OBFUSCATE("()Z")                                                                              , reinterpret_cast<void *>(isGameLibLoaded)},
+            {OBFUSCATE("Init")              , OBFUSCATE("(Landroid/content/Context;Landroid/widget/TextView;Landroid/widget/TextView;)V")   , reinterpret_cast<void *>(Init)},
+            {OBFUSCATE("LoadFontData")      , OBFUSCATE("(Landroid/content/Context;)[B")                                                    , reinterpret_cast<void *>(LoadFontData)},
+            {OBFUSCATE("GetFeatureList")    , OBFUSCATE("()[Ljava/lang/String;")                                                            , reinterpret_cast<void *>(GetFeatureList)},
     };
 
     jint ret = env->RegisterNatives(clazz, methods, sizeof(methods) / sizeof(JNINativeMethod));

@@ -18,8 +18,8 @@ import org.lsposed.lsparanoid.Obfuscate;
 @Obfuscate
 public class ISwitch {
 
-    private Context context;
-    private Typeface typeface;
+    private final Context context;
+    private final Typeface typeface;
     public ISwitch(Context context, Typeface typeface) {
         this.context = context;
         this.typeface = typeface;
