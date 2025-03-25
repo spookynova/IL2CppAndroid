@@ -24,6 +24,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static com.android.support.Utils.dp;
 
@@ -141,6 +142,9 @@ public class Menu {
         __frameLayout.setAlpha(0.4f);
 
         __mRootContainer = new RelativeLayout(context); // Markup on which two markups of the icon and the menu itself will be placed
+        __mRootContainer.setLayoutParams(new RelativeLayout.LayoutParams(dp(context, MENU_WIDTH), WRAP_CONTENT));
+
+
         __mCollapsed = new RelativeLayout(context); // Markup of the icon (when the menu is minimized)
         __mCollapsed.setVisibility(View.GONE);
 
@@ -150,7 +154,7 @@ public class Menu {
         __mExpanded.setOrientation(LinearLayout.VERTICAL);
         __mExpanded.setVisibility(View.VISIBLE);
         __mExpanded.setPadding(1, 1, 1, 1); //So borders would be visible
-        __mExpanded.setLayoutParams(new LinearLayout.LayoutParams(dp(getContext,MENU_WIDTH), WRAP_CONTENT));
+        __mExpanded.setLayoutParams(new LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
 
         //********** The box of the mod menu **********
         GradientDrawable gdMenuBody = new GradientDrawable();
