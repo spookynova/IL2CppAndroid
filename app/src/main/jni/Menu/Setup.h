@@ -42,19 +42,16 @@ void Toast(JNIEnv *env, jobject thiz, const char *text, int length) {
 }
 
 void Init(JNIEnv *env, jobject thiz, jobject ctx, jobject title, jobject bottomTitle){
+    setText(env, title, OBFUSCATE("<b>-=[ R3D Network ID ]=-</b>"));
+    setText(env, bottomTitle, OBFUSCATE("<b>- Modded by rrosetta | Platinmods.com -</b>"));
 
-    //Set sub title
-    setText(env, title, OBFUSCATE("<b><p style=\"color:green\">Modded by Nik2143</p></b>"));
+    // Set Colored Text
+    // setText(env, title, OBFUSCATE("<b><p style=\"color:green\">Modded by Nik2143</p></b>"));
 
-    //Set sub title
-    setText(env,bottomTitle, OBFUSCATE("<b><center><a style=\"color:green;font-size:30\" href=\"www.platinmods.com\">WWW.PLATINMODS.COM</a><center></b>"));
+    Toast(env,ctx,OBFUSCATE("R3D Network ID"),ToastLength::LENGTH_LONG);
 
-    //Dialog Example
-    //setDialog(ctx,env,OBFUSCATE("Title"),OBFUSCATE("Message Example"));
-    //Toast Example
-    Toast(env,ctx,
-          OBFUSCATE("<b><font color=lime>Modded by Nik2143 - Exclusive on www.Platinmods.com</font></b>"),ToastLength::LENGTH_LONG);
+    // Set Colored Toast
+    //Toast(env,ctx,OBFUSCATE("<b><font color=lime>Modded by Nik2143 - Exclusive on www.Platinmods.com</font></b>"),ToastLength::LENGTH_LONG);
 
     initValid = true;
-
 }
