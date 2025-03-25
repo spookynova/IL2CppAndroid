@@ -40,20 +40,20 @@ public class Launcher extends Service {
 
     private void pollForPermissionGrant(Context context) {
         final Handler handler = new Handler();
-
-        final int[] attempts = {0};
         handler.post(new Runnable() {
+            private int attempts = 0;
+
             @Override
             public void run() {
                 if (Utils.CheckOverlayPermissions(context)) {
-                    if(BuildConfig.DEBUG) Log.d(Menu.TAG, "Permission Granted Starting Menu");
+                    if (BuildConfig.DEBUG) Log.d(Menu.TAG, "Permission Granted Starting Menu");
                     startMenu();
-                } else if (attempts[0] < 10) {
-                    if(BuildConfig.DEBUG) Log.d(Menu.TAG, "Permission Not Granted,Attempt: "+ attempts[0] +" Checking Again");
-                    attempts[0]++;
+                } else if (attempts < 10) {
+                    if (BuildConfig.DEBUG) Log.d(Menu.TAG, "Permission Not Granted,Attempt: " + attempts + " Checking Again");
+                    attempts++;
                     handler.postDelayed(this, 1000);
                 } else {
-                    if(BuildConfig.DEBUG) Log.d(Menu.TAG, "Permission Not Granted,Attempt: "+ attempts[0] +" Stopping service");
+                    if (BuildConfig.DEBUG) Log.d(Menu.TAG, "Permission Not Granted,Attempt: " + attempts + " Stopping service");
                     stopSelf();
                 }
             }
@@ -102,7 +102,7 @@ public class Launcher extends Service {
     //Override our Start Command so the Service doesnt try to recreate itself when the App is closed
     public int onStartCommand(Intent intent, int i, int i2) {
         if (intent != null) {
-            if (intent.getBooleanExtra("overlayGranted",true)){
+            if (intent.getBooleanExtra(Main.OVERLAY_PERMISSION_KEY, true)) {
                 startMenu();
             } else {
                 pollForPermissionGrant(this);
