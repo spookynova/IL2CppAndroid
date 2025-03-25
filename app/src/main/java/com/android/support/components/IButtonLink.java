@@ -17,8 +17,8 @@ import org.lsposed.lsparanoid.Obfuscate;
 @Obfuscate
 public class IButtonLink {
 
-    private Context context;
-    private Typeface typeface;
+    private final Context context;
+    private final Typeface typeface;
     public IButtonLink(Context context, Typeface typeface) {
         this.context = context;
         this.typeface = typeface;

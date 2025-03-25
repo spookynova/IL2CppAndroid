@@ -18,8 +18,8 @@ import org.lsposed.lsparanoid.Obfuscate;
 @Obfuscate
 public class ISlider {
 
-    private Context context;
-    private Typeface typeface;
+    private final Context context;
+    private final Typeface typeface;
 
     public ISlider(Context context, Typeface typeface) {
         this.context = context;

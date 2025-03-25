@@ -12,8 +12,8 @@ import org.lsposed.lsparanoid.Obfuscate;
 
 @Obfuscate
 public class ITextView {
-    private Context context;
-    private Typeface typeface;
+    private final Context context;
+    private final Typeface typeface;
 
     public ITextView(Context context, Typeface typeface) {
         this.context = context;

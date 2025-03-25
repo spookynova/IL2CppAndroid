@@ -29,8 +29,8 @@ import org.lsposed.lsparanoid.Obfuscate;
 @Obfuscate
 public class IInputInt {
 
-    private Context context;
-    private Typeface typeface;
+    private final Context context;
+    private final Typeface typeface;
 
     public IInputInt(Context context, Typeface typeface) {
         this.context = context;

@@ -22,8 +22,8 @@ import java.util.List;
 @Obfuscate
 public class ISpinner {
 
-    private Context context;
-    private Typeface typeface;
+    private final Context context;
+    private final Typeface typeface;
 
     public ISpinner(Context context, Typeface typeface) {
         this.context = context;

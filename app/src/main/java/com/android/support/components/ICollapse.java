@@ -17,8 +17,8 @@ import org.lsposed.lsparanoid.Obfuscate;
 @Obfuscate
 public class ICollapse {
 
-    private Context context;
-    private Typeface typeface;
+    private final Context context;
+    private final Typeface typeface;
 
     private LinearLayout mCollapseContent;
 
